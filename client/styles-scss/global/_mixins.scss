@@ -1,0 +1,5 @@
+@mixin vp-1280 {
+    @media (max-width: $vp-tablet) {
+        @content
+    }
+}

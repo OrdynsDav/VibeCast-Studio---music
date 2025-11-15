@@ -1,0 +1,8 @@
+.container {
+    margin: 0 auto;
+    padding: 15px 30px;
+
+    @include vp-1280 {
+        padding: 10px 20px;
+    };
+}

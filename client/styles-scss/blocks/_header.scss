@@ -1,0 +1,20 @@
+.header {
+    position: relative;
+
+    &:has(.nav__menu) {
+        background-color: $color-white-smoke;
+
+        .header__logo {
+            background-color: $color-white;
+        }
+    }
+
+    &__logo {
+        position: absolute;
+        width: 100%;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        padding: 18px 53px;
+    }
+}
