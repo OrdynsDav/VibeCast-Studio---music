@@ -1,7 +1,7 @@
 import { el } from "redom";
 import { createHeartIcon, createMoreIcon } from "../../SvgElements";
 import { fetchAddFavourite, fetchRemoveFavourite } from "../../../api/fetches";
-import { getBase64, playMusic } from "../../../utils/helpers";
+import { PlayTrack } from "../../PlayTrack";
 
 
 export default class MobileTrack {
@@ -31,7 +31,14 @@ export default class MobileTrack {
             el('button', {
                 className: 'tracks__btn',
                 type: "button",
-                onclick: () => playMusic(this.title)
+                onclick: () => PlayTrack({
+                    id: this.id,
+                    title: this.title,
+                    artist: this.artist,
+                    imgPath: `/assets/images/${this.album !== 'single' && this.album !== 'none' ? `albums/${this.album}` : `singles/${this.title}`}.webp`,
+                    duration: this.duration,
+                    audioFile: `/assets/tracks/${this.title}.mp3`
+                })
             }, [
                 el("img", {
                     className: "tracks__img",

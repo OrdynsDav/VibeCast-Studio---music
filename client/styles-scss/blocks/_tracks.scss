@@ -146,14 +146,14 @@
         }
 
         path {
-            stroke: #FF2B2B;
+            stroke: $color-red-orange;
             color: transparent;
             transition: color 0.3s ease;
         }
 
         &--active {
             path {
-                color: #FF2B2B;
+                color: $color-red-orange;
             }
         }
     }
