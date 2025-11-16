@@ -1,57 +1,9 @@
 import { el, setChildren } from "redom";
-<<<<<<< Updated upstream
-import { TrackPlayProps } from "../utils/interfaces";
-import { createHeartIcon, createPauseIcon, createPlayIcon, createRepeatIcon, createShuffleIcon, createSkipLeftIcon, createSkipRightIcon } from "./SvgElements";
-
-export const PlayTrack = ({ title, artist }: TrackPlayProps) => {
-    const heartIcon = createHeartIcon()
-    const shuffleIcon = createShuffleIcon()
-    const skipLeftIcon = createSkipLeftIcon()
-    const skipRightIcon = createSkipRightIcon()
-    const playIcon = createPlayIcon()
-    const pauseIcon = createPauseIcon()
-    const repeatIcon = createRepeatIcon()
-
-    document.body.append(
-        el('div', {
-            className: 'track-play'
-        }, [
-            el('div', {
-                className: 'track-play__info'
-            }, [
-                el('img', {
-                    className: 'track-play__img',
-                    /* src: `/assets/images/${title}.png`, */
-                    width: 60,
-                    height: 60,
-                }),
-                el('div', {
-                    className: 'track-play__description'
-                }, [
-                    el('div', {
-                        className: 'track-play__title-wrap'
-                    }, [
-                        el('h3', {
-                            className: 'track-play__title',
-                            textContent: title
-                        }),
-                        heartIcon,
-                    ]),
-                    el('p', {
-                        className: 'track-play__text',
-                        textContent: artist
-                    })
-                ])
-=======
 import { TrackPlayProps } from "../../src/utils/interfaces";
 import { createHeartIcon, createPauseIcon, createPlayIcon, createRepeatIcon, createShuffleIcon, createSkipLeftIcon, createSkipRightIcon, createSpeakerLowIcon } from "./SvgElements";
 import { fetchAddFavourite, fetchRemoveFavourite } from "../../src/api/fetches";
 import { formatSeconds, parseApiDuration } from "../utils/helpers";
-import { modalErrorPlayTrack } from "../utils/modals";
-import { MAIN_CONTAINER } from "../utils/constants";
 
-let currentTrack: { destroy: () => void; audio: HTMLAudioElement } | null = null;
-let playerCount = 0;
 
 export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: TrackPlayProps) => {
     const heartIcon = createHeartIcon();
@@ -141,17 +93,7 @@ export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: T
     // Контроль воспроизведения
     playPauseBtn.onclick = () => {
         if (audio.paused) {
-            audio.play().catch((err) => {
-                /* document.body.append(modalErrorPlayTrack(err.message)) */
-                if (MAIN_CONTAINER) {
-                    MAIN_CONTAINER.append(modalErrorPlayTrack(err.message));
-                }
-
-                if (currentTrack && currentTrack.audio === audio) {
-                    currentTrack.destroy();
-                }
-            }
-            );
+            audio.play().catch(err => console.error("Ошибка воспроизведения:", err));
             setChildren(playPauseBtn, [pauseIcon]);
             playPauseBtn.classList.add('track-play__btn--active');
 
@@ -189,13 +131,8 @@ export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: T
 
     const initPlayback = () => {
         audio.play().catch(err => {
-            /* document.body.append(modalErrorPlayTrack(err.message)) */
-            if (MAIN_CONTAINER) {
-                MAIN_CONTAINER.append(modalErrorPlayTrack(err.message));
-            }
-            if (currentTrack && currentTrack.audio === audio) {
-                currentTrack.destroy();
-            }
+            console.error("Автовоспроизведение заблокировано:", err);
+            playPauseBtn.click();
         });
 
         setChildren(playPauseBtn, [pauseIcon]);
@@ -204,6 +141,8 @@ export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: T
         if (interval) clearInterval(interval);
         interval = window.setInterval(updateProgress, 100);
     };
+
+    initPlayback();
 
     const player = el('div', { className: 'track-play' }, [
         el('div', { className: 'track-play__info' }, [
@@ -247,69 +186,17 @@ export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: T
                 playPauseBtn,
                 el('button', { className: 'track-play__btn track-play__btn--skip-right', type: 'button' }, [skipRightIcon]),
                 el('button', { className: 'track-play__btn track-play__btn--repeat', type: 'button' }, [repeatIcon])
->>>>>>> Stashed changes
             ]),
-            el('div', {
-                className: 'track-play__settings'
-            }, [
-                el('div', {
-                    className: 'track-play__actions'
-                }, [
-                    el('button', {
-                        className: ['track-play__btn track-play__btn--shuffle'],
-                        type: 'button',
-                    }, [
-                        shuffleIcon
-                    ]),
-                    el('button', {
-                        className: ['track-play__btn track-play__btn--skip-left'],
-                        type: 'button',
-                    }, [
-                        skipLeftIcon
-                    ]),
-                    el('button', {
-                        className: ['track-play__btn track-play__btn--play'],
-                        type: 'button',
-                        onclick: () => {
-                            const btn = document.querySelector('.track-play__btn--play')
-                            if (!btn) {
-                                return
-                            }
-                            btn.classList.toggle('track-play__btn--active')
-
-                            if (btn.classList.contains('track-play__btn--active')) {
-                                setChildren(btn, [pauseIcon])
-                            } else {
-                                setChildren(btn, [playIcon])
-                            }
-                        }
-                    }, [
-                        playIcon
-                    ]),
-                    
-                    el('button', {
-                        className: ['track-play__btn track-play__btn--skip-right'],
-                        type: 'button',
-                    }, [
-                        skipRightIcon
-                    ]),
-                    el('button', {
-                        className: ['track-play__btn track-play__btn--repeat'],
-                        type: 'button',
-                    }, [
-                        repeatIcon
-                    ]),
-                ])
-            ]),
-            el('div', {
-                className: 'track-play__volume'
-            }, [
+            // Прогресс-бар с таймером
+            el('div', { className: 'track-play__progress-bar' }, [
+                timeStartEl,
+                progressBar,
+                timeEndEl
             ])
+        ]),
+        el('div', { className: 'track-play__volume' }, [
+            el('button', { className: 'track-play__btn track-play__btn--speaker-low', type: 'button' }, [speakerLowIcon])
         ])
-<<<<<<< Updated upstream
-    )
-}
-=======
     ]);
 
     document.body.appendChild(player);
@@ -318,31 +205,19 @@ export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: T
         player.classList.add('track-play--show');
     });
 
-    if (currentTrack) {
-        currentTrack.destroy();
-        currentTrack = null;
-    }
-
-    playerCount++;
-    if (playerCount === 1) {
-        document.body.classList.add('play');
-    }
-
-    currentTrack = {
+    return {
         destroy: () => {
             if (interval) clearInterval(interval);
             audio.pause();
 
+            // Убираем классы анимации
             player.classList.remove('track-play--show');
+            document.body.classList.remove('track-play--show');
 
-            playerCount = Math.max(0, playerCount - 1);
-
-            if (playerCount === 0) {
-                document.body.classList.remove('play');
-            }
-
+            // Удаляем из DOM после анимации
             setTimeout(() => {
                 if (player.isConnected) player.remove();
+                document.body.classList.remove('play-track');
             }, 300);
         },
         audio
@@ -352,4 +227,5 @@ export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: T
 
     return currentTrack;
 };
->>>>>>> Stashed changes
+
+};

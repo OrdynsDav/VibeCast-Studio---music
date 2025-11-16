@@ -4,22 +4,21 @@
     bottom: 0;
     left: 0;
     border-top: 1px solid $color-whisper;
-    padding: 6px 30px 20px;
+    padding: 20px 30px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 84px;
     max-width: 100vw;
     width: 100%;
     background-color: $color-white;
-<<<<<<< Updated upstream
-=======
     transform: translateY(100%);
+    transform: translateY(100%); // скрыт внизу
 
     &.track-play--show {
         transform: translateY(0);
         transition: transform 0.3s ease;
     }
->>>>>>> Stashed changes
 
     &__info {
         display: flex;
@@ -34,20 +33,94 @@
         margin: 0 0 10px;
     }
 
+    &__title {
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        font-size: 14px;
+        line-height: 12px;
+    }
+
     &__text {
         font-size: 12px;
         line-height: 12px;
         color: $color-dark-gray-1;
     }
 
+    &__settings {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
     &__actions {
         display: flex;
         gap: 20px;
         align-items: center;
+        justify-content: center;
         width: 681px;
     }
 
+    &__progress-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 610px;
+        font-size: 12px;
+        color: $color-dark-gray-1;
+    }
+
+    &__time {
+        min-width: 40px;
+        text-align: center;
+    }
+
+    &__progress {
+        flex: 1;
+        height: 4px;
+        background: $color-whisper;
+        border-radius: 2px;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+    }
+
+    &__progress-fill {
+        height: 100%;
+        width: 0;
+        background: $color-burnt-orange;
+        border-radius: 2px;
+        transition: width 0.1s linear;
+    }
+
     &__btn {
+        &--like {
+            width: 24px;
+            height: 24px;
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: -3px;
+                top: -4px;
+                width: 32px;
+                height: 32px;
+                z-index: 2;
+            }
+
+            path {
+                stroke: $color-red-orange;
+                color: transparent;
+            }
+
+            &-active {
+                path {
+                    color: $color-red-orange;
+                }
+            }
+        }
+
         &--play {
             width: 40px;
             height: 40px;

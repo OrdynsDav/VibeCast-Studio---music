@@ -48,23 +48,20 @@ async function getBase64(filePath: string): Promise<string> {
     }
 }
 
-const playMusic = async (file: string) => {
-    try {
-        const base64String = await getBase64(`/assets/tracks/${file}.mp3`);
+// Форматирует секунды в MM:SS (например, 1:30)
+function formatSeconds(seconds: number): string {
+    const safeSeconds = Math.max(0, Math.floor(seconds));
+    const mins = Math.floor(safeSeconds / 60);
+    const secs = safeSeconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
 
-        const audio = new Audio(base64String);
-        audio.play();
-
-        audio.addEventListener('error', (e) => {
-            console.error('Ошибка воспроизведения:', e);
-        });
-        audio.addEventListener('play', () => {
-            console.log('Песня играет!');
-        });
-    } catch (error) {
-        console.error('Ошибка загрузки трека:', error);
-    }
-};
+// Переводит API-формат 2.43 → 2 минуты 43 секунды → 163 секунды
+function parseApiDuration(apiValue: number): number {
+    const minutes = Math.floor(apiValue);
+    const seconds = Math.round((apiValue - minutes) * 100); // 0.43 → 43
+    return minutes * 60 + seconds;
+}
 
 const clearAllModals = () => {
     // Удаляем все модалки
@@ -90,11 +87,9 @@ export {
     removeStrorageItem,
     setCache,
     getBase64,
-<<<<<<< Updated upstream
-    playMusic
-=======
     formatSeconds,
     parseApiDuration,
-    clearAllModals
->>>>>>> Stashed changes
+    clearAllModals,
+    formatSeconds,
+    parseApiDuration
 }

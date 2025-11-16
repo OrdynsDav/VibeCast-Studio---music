@@ -41,8 +41,10 @@ export interface TracksPageProps {
 }
 
 export interface TrackPlayProps {
+  id: number;
   title: string;
   artist: string;
+  imgPath: string;
   duration: number;
-  file: string;
+  audioFile: string;
 }
