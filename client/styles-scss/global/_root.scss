@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html:has(.modal-error-play-track-body) { 
+    overflow-y: hidden;
+}
+
 body {
     font-family: $ff-main;
     font-style: normal;
@@ -32,8 +36,15 @@ body {
         }
     }
 
+    &.play {
+        main {
+            margin-bottom: 100px;
+        }
+    }
+
     &.modal-after-register-body {
         overflow-x: hidden;
+
         &::before {
             content: '';
             display: flex;
@@ -53,6 +64,12 @@ body {
             pointer-events: none;
             user-select: none;
         }
+    }
+
+    &.modal-error-play-track-body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(ellipse at center, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+        overflow-x: hidden;
     }
 }
 

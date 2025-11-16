@@ -21,7 +21,7 @@ const getStorageItem = (item: string): string | null => localStorage.getItem(ite
 const setStorageItem = (name: string, item: string): void => localStorage.setItem(name, item);
 const removeStrorageItem = (name: string): void => localStorage.removeItem(name);
 const TOKEN = (): string | null => {
-    const token = getStorageItem("token")
+    const token = sessionStorage.getItem("token")
     return token
 }
 
@@ -63,6 +63,22 @@ function parseApiDuration(apiValue: number): number {
     return minutes * 60 + seconds;
 }
 
+const clearAllModals = () => {
+    // Удаляем все модалки
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.remove();
+    });
+
+    // Убираем классы с body
+    document.body.classList.remove(
+        'play-track',
+        'modal-after-register-body',
+        'modal-error-play-track-body',
+        'play'
+    );
+};
+
+
 export {
     areTracksArraysEqual,
     TOKEN,
@@ -71,6 +87,9 @@ export {
     removeStrorageItem,
     setCache,
     getBase64,
+    formatSeconds,
+    parseApiDuration,
+    clearAllModals,
     formatSeconds,
     parseApiDuration
 }

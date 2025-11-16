@@ -223,4 +223,9 @@ export const PlayTrack = ({ id, title, artist, imgPath, duration, audioFile }: T
         audio
     };
 
+    initPlayback();
+
+    return currentTrack;
+};
+
 };

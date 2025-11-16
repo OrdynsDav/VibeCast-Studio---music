@@ -4,6 +4,7 @@ import { AddTracksToContainer } from "../../components/Tracks/AddTracksToContain
 import { HEADER_CONTAINER, MAIN_CONTAINER, VIEWPORT_WIDTH } from "../../utils/constants";
 import { TracksPageProps } from "../../utils/interfaces";
 import { TracksList } from "../../components/Tracks/TabletAndMobile/TracksList";
+import { setStorageItem } from "../../utils/helpers";
 
 export const TracksPage = ({ isFavourites }: TracksPageProps) => {
     const tracksTable = TracksTable();
@@ -19,6 +20,8 @@ export const TracksPage = ({ isFavourites }: TracksPageProps) => {
             textContent: isFavourites ? 'Избранные треки' : 'Аудифайлы и треки',
         })
     ])
+
+    setStorageItem('favourites', '')
 
     if (!MAIN_CONTAINER || !HEADER_CONTAINER) {
         throw new Error("Контейнер не найден");
