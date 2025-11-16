@@ -91,7 +91,7 @@ export const login = async (event: Event) => {
         validateAndClearErrors(nameInput, passwordInput);
         const data = await fetchLogin(nameInput.value.trim(), passwordInput.value.trim());
 
-        setStorageItem('token', data.token);
+        sessionStorage.setItem('token', data.token)
         setStorageItem('username', nameInput.value.trim())
 
         renderMainApp();

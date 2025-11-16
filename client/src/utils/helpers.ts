@@ -21,7 +21,7 @@ const getStorageItem = (item: string): string | null => localStorage.getItem(ite
 const setStorageItem = (name: string, item: string): void => localStorage.setItem(name, item);
 const removeStrorageItem = (name: string): void => localStorage.removeItem(name);
 const TOKEN = (): string | null => {
-    const token = getStorageItem("token")
+    const token = sessionStorage.getItem("token")
     return token
 }
 
@@ -66,6 +66,22 @@ const playMusic = async (file: string) => {
     }
 };
 
+const clearAllModals = () => {
+    // Удаляем все модалки
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.remove();
+    });
+
+    // Убираем классы с body
+    document.body.classList.remove(
+        'play-track',
+        'modal-after-register-body',
+        'modal-error-play-track-body',
+        'play'
+    );
+};
+
+
 export {
     areTracksArraysEqual,
     TOKEN,
@@ -74,5 +90,11 @@ export {
     removeStrorageItem,
     setCache,
     getBase64,
+<<<<<<< Updated upstream
     playMusic
+=======
+    formatSeconds,
+    parseApiDuration,
+    clearAllModals
+>>>>>>> Stashed changes
 }
