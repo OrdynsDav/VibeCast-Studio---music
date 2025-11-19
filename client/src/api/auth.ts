@@ -1,12 +1,12 @@
 import { fetchLogin, fetchRegister } from "./fetches";
 import { MAIN_CONTAINER } from "../utils/constants";
-import { setStorageItem } from "../utils/helpers";
+import { isErrorLogin, setStorageItem } from "../utils/helpers";
 import { UserSchema } from "../utils/interfaces";
 import { LoginPage } from "../view/pages/LoginPage";
 import { MainFrame } from "../view/pages/MainFrame";
 import { TracksPage } from "../view/pages/TracksPage";
-import { modalAfterRegister } from "../utils/modals";
-import { mount } from "redom";
+import { modalAfterRegister, modalErrorPlayTrack } from "../utils/modals";
+import { el, mount } from "redom";
 
 const validateAndClearErrors = (nameInput: HTMLInputElement, passwordInput: HTMLInputElement) => {
     const nameDiv = nameInput?.parentElement as HTMLElement;
@@ -69,7 +69,7 @@ export const register = async (event: Event) => {
     try {
         validateAndClearErrors(nameInput, passwordInput);
 
-        await fetchRegister(nameInput.value.trim(), passwordInput.value.trim());
+        await fetchRegister(nameInput.value.trim(), passwordInput.value.trim())
         setStorageItem('username', nameInput.value.trim())
 
         LoginPage()
@@ -97,6 +97,14 @@ export const login = async (event: Event) => {
         renderMainApp();
 
     } catch (error) {
-        console.error('Login error:', error);
+        if (isErrorLogin(error)) {
+            if (error.message == '{"message":"произошла ошибка при авторизации - неверные данные"}') {
+                const par = el('p', {
+                    className: 'login__error',
+                    textContent: 'Произошла ошибка при авторизации - неверные данные'
+                })
+                passwordInput.parentElement?.after(par)
+            }
+        }
     }
 };

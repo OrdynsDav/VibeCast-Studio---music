@@ -109,7 +109,6 @@ export const modalErrorPlayTrack = (errorCode: string): HTMLElement => {
                 modal.remove();
                 document.body.classList.remove('modal-error-play-track-body');
                 document.removeEventListener('click', handler);
-                
             }
         };
         document.addEventListener('click', handler);

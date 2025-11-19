@@ -1,6 +1,6 @@
 import { el, setChildren } from "redom";
 import { fetchGetFavourites, fetchTracks } from "../../api/fetches";
-import { buildPaginationButtons, renderDesktopTracksPage } from "../paginationAndRender";
+import { buildPaginationButtons, renderDesktopTracksPage } from "../PaginationAndRender";
 import { TrackProps, TracksPageProps } from "../../utils/interfaces";
 import { VIEWPORT_WIDTH, ITEM_IN_PAGE, MOBILE_LOAD_SIZE } from "../../utils/constants";
 import { setCache, getStorageItem } from "../../utils/helpers";
@@ -50,6 +50,7 @@ function updatePagination(isFavourites: boolean) {
     const section = document.querySelector(".tracks");
     const tbody = document.querySelector("tbody");
     if (!section || !tbody) return;
+
     const totalPages = Math.ceil(filteredTracks.length / ITEM_IN_PAGE);
     if (totalPages <= 1) {
         if (paginationElement.isConnected) {
@@ -57,6 +58,7 @@ function updatePagination(isFavourites: boolean) {
         }
         return;
     }
+
     setChildren(paginationElement, buildPaginationButtons({
         totalPages,
         currentPage,
@@ -72,6 +74,7 @@ function updatePagination(isFavourites: boolean) {
             updatePagination(isFavourites);
         }
     }));
+    
     if (!paginationElement.isConnected) {
         section.appendChild(paginationElement);
     }
@@ -82,15 +85,15 @@ function renderMobileTracks(tracks: TrackProps[], container: HTMLElement) {
         mobileObserver.disconnect();
         mobileObserver = null;
     }
-    
+
     setChildren(container, []);
     const initialTracks = tracks.slice(0, MOBILE_LOAD_SIZE);
     const initialElements = initialTracks.map((track, index) => {
         const music = new MobileTrack(track.id, track.title, track.artist, track.duration, track.album);
-        return music.getTrack();  
+        return music.getTrack(initialTracks);
     });
-    initialElements.forEach(el => container.appendChild(el)); 
-    
+    initialElements.forEach(el => container.appendChild(el));
+
     if (tracks.length > MOBILE_LOAD_SIZE) {
         addLazyLoadingObserver(container, tracks, MOBILE_LOAD_SIZE);
     }
@@ -99,16 +102,16 @@ function renderMobileTracks(tracks: TrackProps[], container: HTMLElement) {
 function addLazyLoadingObserver(container: HTMLElement, allTracks: TrackProps[], nextIndex: number) {
     const lastItem = container.lastElementChild as HTMLElement;
     if (!lastItem) return;
-    
+
     mobileObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 if (nextIndex < allTracks.length) {
                     const nextTrack = allTracks[nextIndex];
                     const music = new MobileTrack(nextTrack.id, nextTrack.title, nextTrack.artist, nextTrack.duration, nextTrack.album);
-                    const nextElement = music.getTrack();
+                    const nextElement = music.getTrack(allTracks);
                     container.appendChild(nextElement);
-                    
+
                     if (nextIndex + 1 < allTracks.length) {
                         mobileObserver!.disconnect();
                         addLazyLoadingObserver(container, allTracks, nextIndex + 1);
@@ -122,9 +125,9 @@ function addLazyLoadingObserver(container: HTMLElement, allTracks: TrackProps[],
     }, {
         root: null,
         rootMargin: '0px 0px 100px 0px',
-        threshold: 0.1 
+        threshold: 0.1
     });
-    
+
     mobileObserver.observe(lastItem);
 }
 // Функция инициализации для десктопной версии (с пагинацией, для viewport > 1100)

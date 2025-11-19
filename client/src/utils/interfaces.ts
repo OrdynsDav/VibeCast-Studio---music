@@ -29,6 +29,10 @@ export interface LoginProps {
   token: string;
 }
 
+export interface ErrorLogin {
+  message: string;
+}
+
 export interface PaginationProps {
   totalPages: number;
   currentPage: number;
@@ -40,11 +44,20 @@ export interface TracksPageProps {
   isFavourites: boolean;
 }
 
-export interface TrackPlayProps {
+export interface TrackData {
   id: number;
   title: string;
   artist: string;
-  imgPath: string;
   duration: number;
+  album?: string;
+  imgPath: string;
   audioFile: string;
+}
+
+export interface TrackPlayProps extends TrackData {
+  isFavourite: boolean;
+  trackList: TrackPlayProps[];
+  currentIndex: number;
+  isShuffle?: boolean;
+  isRepeat?: boolean;
 }

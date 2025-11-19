@@ -123,7 +123,7 @@
             background: linear-gradient(135deg, $color-white, $color-azure);
             border-radius: 50%;
             animation: float-error 4s ease-in-out infinite;
-            box-shadow: 0 20px 40px $color-cinnabar33, inset 0 2px 4px $color-white-3;
+            box-shadow: 0 20px 40px $color-cinnabar, inset 0 2px 4px $color-white-3;
 
             svg {
                 filter: drop-shadow(0 4px 8px $color-cinnabar-2);

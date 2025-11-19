@@ -1,4 +1,4 @@
-import { TrackProps } from "./interfaces";
+import { ErrorLogin, TrackProps } from "./interfaces";
 
 function areTracksArraysEqual(a: TrackProps[], b: TrackProps[]): boolean {
     if (a.length !== b.length) return false;
@@ -30,24 +30,6 @@ const setCache = (name: string, item: string | TrackProps[]): void => {
     localStorage.setItem(name, valueToStore);
 }
 
-async function getBase64(filePath: string): Promise<string> {
-    try {
-        const response = await fetch(filePath);
-        if (!response.ok) throw new Error('Файл не найден или не загружен.');
-
-        const arrayBuffer = await response.arrayBuffer();
-        const uint8Array = new Uint8Array(arrayBuffer);
-
-        const binaryString = Array.from(uint8Array, byte => String.fromCharCode(byte)).join('');
-        const base64String = btoa(binaryString);
-
-        return `data:audio/mpeg;base64,${base64String}`;
-    } catch (error) {
-        console.error('Ошибка загрузки или кодирования:', error);
-        throw error;
-    }
-}
-
 // Форматирует секунды в MM:SS (например, 1:30)
 function formatSeconds(seconds: number): string {
     const safeSeconds = Math.max(0, Math.floor(seconds));
@@ -63,21 +45,31 @@ function parseApiDuration(apiValue: number): number {
     return minutes * 60 + seconds;
 }
 
-const clearAllModals = () => {
-    // Удаляем все модалки
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.remove();
-    });
-
-    // Убираем классы с body
-    document.body.classList.remove(
-        'play-track',
-        'modal-after-register-body',
-        'modal-error-play-track-body',
-        'play'
+function isErrorLogin(error: unknown): error is ErrorLogin {
+    return (
+        typeof error === 'object' &&
+        error !== null &&
+        'message' in error &&
+        typeof (error as any).message === 'string'
     );
-};
+}
 
+function getFavouriteIds(): number[] {
+    try {
+        const favourites = localStorage.getItem('favourites');
+        if (!favourites) return [];
+        const tracks = JSON.parse(favourites);
+        if (!Array.isArray(tracks)) return [];
+        return tracks.map((track: any) => Number(track.id)).filter(id => !isNaN(id));
+    } catch (e) {
+        console.error('Error reading favourites from localStorage', e);
+        return [];
+    }
+}
+
+function isFavourite(id: number): boolean {
+    return getFavouriteIds().includes(id);
+}
 
 export {
     areTracksArraysEqual,
@@ -86,10 +78,8 @@ export {
     setStorageItem,
     removeStrorageItem,
     setCache,
-    getBase64,
     formatSeconds,
     parseApiDuration,
-    clearAllModals,
-    formatSeconds,
-    parseApiDuration
+    isErrorLogin,
+    isFavourite
 }
