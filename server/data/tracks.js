@@ -5,9 +5,6 @@ const tracks = [
     artist: "Miyagi & Эндшпиль",
     duration: 4.00,
     album: 'Hajime, Pt. 2',
-    size_mb: 8.57,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRXRlcm5hbCBTdW5zZXQgYnkgU2t5bGluZSBTb3VuZHM=",
   }, 
   {
     id: 2,
@@ -15,8 +12,6 @@ const tracks = [
     artist: "Merab Amzoevi",
     duration: 2.28,
     album: 'Временно',
-    size_mb: 3.88,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgQ2l0eSBOaWdodHMgYnkgVXJiYW4gQmVhdHM=",
   },
   {
     id: 3,
@@ -24,8 +19,6 @@ const tracks = [
     artist: "Eminem feat. Dido",
     duration: 6.44,
     album: 'The Marshall Mathers LP',
-    size_mb: 3.6,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgT2NlYW4gQnJlZXplIGJ5IERlZXAgV2F2ZQ==",
   },
   {
     id: 4,
@@ -33,8 +26,6 @@ const tracks = [
     artist: "Ed Sheeran",
     duration: 3.53,
     album: '÷',
-    size_mb: 7.75,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgTW9ybmluZyBEZXcgYnkgRnJlc2ggQWly",
   },
   {
     id: 5,
@@ -42,9 +33,6 @@ const tracks = [
     artist: "Miyagi & Эндшпиль",
     duration: 4.00,
     album: 'HATTORI',
-    size_mb: 2.01,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgU3RhcmxpdCBSb2FkIGJ5IENvc21pYyBSaHl0aG1z",
   },
   {
     id: 6,
@@ -52,9 +40,6 @@ const tracks = [
     artist: "Xcho, Mr Lambo, Пабло",
     duration: 3.19,
     album: 'Cross',
-    size_mb: 4.77,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgTWlkbmlnaHQgRXNjYXBlIGJ5IE5pZ2h0ZmFsbA==",
   },
   {
     id: 7,
@@ -62,9 +47,6 @@ const tracks = [
     artist: "Xcho, MACAN",
     duration: 2.50,
     album: 'Cross',
-    size_mb: 6.33,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRWxlY3RyaWMgSGVhcnQgYnkgVm9sdCBTcGFya3M=",
   },
   {
     id: 8,
@@ -72,9 +54,6 @@ const tracks = [
     artist: "Merab Amzoevi",
     duration: 4.96,
     album: 'Временно',
-    size_mb: 4.57,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgU3VucmlzZSBPdmVyIFRoZSBDaXR5IGJ5IERhd24gQXJjaGl0ZWN0cw==",
   },
   {
     id: 9,
@@ -82,9 +61,6 @@ const tracks = [
     artist: "Miyagi & Эндшпиль feat. Рем Дигга",
     duration: 4.36,
     album: 'single',
-    size_mb: 6.98,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgTG9zdCBpbiB0aGUgRWNobyBieSBXYXZlIEZvcm0=",
   },
   {
     id: 10,
@@ -92,8 +68,6 @@ const tracks = [
     artist: "Miyagi",
     duration: 3.34,
     album: 'Buster Keaton',
-    size_mb: 3.54,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgTmVvbiBQdWxzZSBieSBVcmJhbiBWaWJlcyBv",
   },
   {
     id: 11,
@@ -101,9 +75,6 @@ const tracks = [
     artist: "Rauf & Faik",
     duration: 4.12,
     album: 'single',
-    size_mb: 6.09,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgVW5kZXJ3YXRlciBEcmVhbXMgYnkgQXF1YSBHcm92ZQ==",
   },
   {
     id: 12,
@@ -111,9 +82,6 @@ const tracks = [
     artist: "Xcho",
     duration: 2.46,
     album: 'Cross',
-    size_mb: 4.38,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRGVzZXJ0IE1pcmFnZSBieSBTYWhhcmEgQmVhdHM=",
   },
   {
     id: 13,
@@ -121,9 +89,6 @@ const tracks = [
     artist: "Hozier",
     duration: 4.01,
     album: 'Hozier',
-    size_mb: 3.61,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgTmlnaHQgU2t5IGJ5IENlbGVzdGlhbCBTb3VuZHM=",
   },
   {
     id: 14,
@@ -131,9 +96,6 @@ const tracks = [
     artist: "9 Грамм feat. Miyagi, Эндшпиль",
     duration: 5.34,
     album: 'single',
-    size_mb: 6.74,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgSG9yaXpvbiBTaGlmdCBieSBGdXQgdXJlIEhvcml6b25z",
   },
   {
     id: 15,
@@ -141,9 +103,6 @@ const tracks = [
     artist: "ЯрмаК",
     duration: 3.49,
     album: 'single',
-    size_mb: 5.16,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRWNob2VzIG9mIHRoZSBQYXN0IGJ5IFRpbWVsaWVzcyBXYXZl",
   },
   {
     id: 16,
@@ -151,9 +110,6 @@ const tracks = [
     artist: "Miyagi & Эндшпиль",
     duration: 4.00,
     album: 'Hajime, Pt. 1',
-    size_mb: 5.88,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgUmlzaW5nIFRpZGUgYnkgT2NlYW4gRmxvdyBGb3c=",
   },
   {
     id: 17,
@@ -161,9 +117,6 @@ const tracks = [
     artist: "HENSY",
     duration: 2.34,
     album: 'single',
-    size_mb: 7.47,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgQmx1ZSBIb3Jpem9uIHN0cnVjdHVyZWQgYnk9U2t5IENvYXN0",
   },
   {
     id: 18,
@@ -171,9 +124,6 @@ const tracks = [
     artist: "Miyagi",
     duration: 2.07,
     album: 'Buster Keaton',
-    size_mb: 6.39,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgTm9ydGhlcm4gTGlnaHRzIGJ5IEF1cm9yYSBEcmVhbQ==",
   },
   {
     id: 19,
@@ -181,9 +131,6 @@ const tracks = [
     artist: "104, Miyagi, Скриптонит",
     duration: 3.45,
     album: 'Кино без сигарет',
-    size_mb: 4.13,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgU2lsZW50IE5pZ2h0IGJ5IFNvbHV0aWRlIEJlYXRz",
   },
   {
     id: 20,
@@ -191,9 +138,6 @@ const tracks = [
     artist: "Miyagi & Andy Panda",
     duration: 4.06,
     album: 'single',
-    size_mb: 8.44,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgTW9vbmxpdCBKdXJuZXkgaW4gY29uY3VzdGFuY2UsIGJ5IEx1bmFyIFJ5dGhtcyBvYg==",
   },
   {
     id: 21,
@@ -201,8 +145,6 @@ const tracks = [
     artist: "Merab Amzoevi",
     duration: 3.12,
     album: 'Временно',
-    size_mb: 3.71,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgRnJvemVuIE1vbWVudHMgYnkgSWNlIFF1ZWVu",
   },
   {
     id: 22,
@@ -210,19 +152,13 @@ const tracks = [
     artist: "Nickelback",
     duration: 3.10,
     album: 'Here and Now',
-    size_mb: 6.73,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgVmlvbGV0IFNreSBieSBKdXNrIEVjaG8gU2Vhc29ucw==",
   },
   {
     id: 23,
-    title: "Waves of Change",
-    artist: "Fluid Motion",
-    duration: 6.75,
-    album: 'none',
-    size_mb: 6.17,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgV2F2ZXMgb2YgQ2hhbmdlIGJ5IEZsdWlkIE1vdGlvbg==",
+    title: "За туманами",
+    artist: "Литвиненко",
+    duration: 3.25,
+    album: 'single',
   },
   {
     id: 24,
@@ -230,9 +166,6 @@ const tracks = [
     artist: "Miaygi & Andy Panda",
     duration: 4.15,
     album: 'YAMAKASI',
-    size_mb: 5.05,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgQ3lzdGFsIExha2UgYnkgTmF0dXJlIFNwaXJpdHM=",
   },
   {
     id: 25,
@@ -240,9 +173,6 @@ const tracks = [
     artist: "Miyagi & Эндшпиль",
     duration: 3.49,
     album: 'HATTORI',
-    size_mb: 7.02,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgVGltZWxlc3MgTW9tZW50IGJ5IFZpbnRhZ2UgUnl0aG1z",
   },
   {
     id: 26,
@@ -250,9 +180,6 @@ const tracks = [
     artist: "Eminem, Dina Rae",
     duration: 5.50,
     album: 'The Eminem Show',
-    size_mb: 7.64,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgR2FsYWFyeSBFZGdlIGJ5IFN0ZWxsYXIgRnJlcXVlbmNpZXM=",
   },
   {
     id: 27,
@@ -260,9 +187,6 @@ const tracks = [
     artist: "Akon feat. Eminem",
     duration: 3.33,
     album: 'Konvicted',
-    size_mb: 5.99,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgSW5maW5pdGUgRHJlYW1zIGJ5IEVuZGxlc3MgSnVybmV5",
   },
   {
     id: 28,
@@ -270,8 +194,6 @@ const tracks = [
     artist: "KADI, Miyagi",
     duration: 4.14,
     album: 'Kopfkino',
-    size_mb: 5.42,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgU29sYXIgRmxhcmUgYnkgSGVhdHdhdmU=",
   },
   {
     id: 29,
@@ -279,9 +201,6 @@ const tracks = [
     artist: "Miyagi & Эндшпиль",
     duration: 2.46,
     album: 'HATTORI',
-    size_mb: 3.88,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgSW50byB0aGUgV2lsZGVybmVzcyBieSBXaWxkIFJvb3Rz",
   },
   {
     id: 30,
@@ -289,9 +208,6 @@ const tracks = [
     artist: "Ed Sheeran",
     duration: 4.23,
     album: '÷',
-    size_mb: 7.46,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRWNobyBpbiB0aGUgTW91bnRhaW5zIGJ5IEFscGluZSBWb2ljZQ==",
   },
   {
     id: 31,
@@ -299,8 +215,6 @@ const tracks = [
     artist: "Eminem",
     duration: 4.08,
     album: 'Recovery',
-    size_mb: 5.95,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgTW9ybmluZyBNaXN0IGJ5IENsb3VkcmlzZQ==",
   },
   {
     id: 32,
@@ -308,9 +222,6 @@ const tracks = [
     artist: "Eminem & Эндшпиль",
     duration: 3.15,
     album: 'HATTORI',
-    size_mb: 4.5,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgQ2hhc2luZyB0aGUgTW9vbiBieSBMdW5hciBSdW4=",
   },
   {
     id: 33,
@@ -318,9 +229,6 @@ const tracks = [
     artist: "Eminem",
     duration: 4.11,
     album: 'Encore',
-    size_mb: 6.44,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgV2hpcHNlcnMgb2YgdGhlIEZvcmVzdCBieSBHcmVlbiBFY2hvZXM=",
   },
   {
     id: 34,
@@ -328,8 +236,6 @@ const tracks = [
     artist: "Eminem",
     duration: 5.26,
     album: '8 Mile',
-    size_mb: 5.33,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgQ3JpbXNvbiBTdW5zZXQgYnkgUmVkIFNreQ==",
   },
   {
     id: 35,
@@ -337,9 +243,6 @@ const tracks = [
     artist: "Miyagi & Andy Panda",
     duration: 3.41,
     album: 'single',
-    size_mb: 5.9,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRGlnaXRhbCBkcmVhbXMgYnkgVGVjaG5vIFB1bHNl",
   },
   {
     id: 36,
@@ -347,9 +250,6 @@ const tracks = [
     artist: "Andy Panda & Miyagi",
     duration: 3.13,
     album: 'King Kong',
-    size_mb: 6.56,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgR3Jhdml0eSBXYXZlcyBieSBQbGFuZXRhcnkgU291bmQ=",
   },
   {
     id: 37,
@@ -357,9 +257,6 @@ const tracks = [
     artist: "Enrique Iglesias & Bad Bunny",
     duration: 3.45,
     album: 'Final (Vol. 1)',
-    size_mb: 5.46,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRWxlY3RyaWMgRHJlYW1zIGJ5IE5lb24gRmx1eA==",
   },
   {
     id: 38,
@@ -367,9 +264,6 @@ const tracks = [
     artist: "The Chainsmokers, Daya",
     duration: 3.28,
     album: 'single',
-    size_mb: 7.05,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgV2luZCBpbiB0aGUgUGluZXMgYnkgV2hpc3BlcmluZyBXYWluZHM=",
   },
   {
     id: 39,
@@ -377,8 +271,6 @@ const tracks = [
     artist: "Hippie Sabotage",
     duration: 2.11,
     album: 'Providence',
-    size_mb: 5.5,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgU2lsZW50IFNlYSBieSBQbHVlIEhvcnpvem9u",
   },
   {
     id: 40,
@@ -386,108 +278,7 @@ const tracks = [
     artist: "Merab Amzoevi",
     duration: 3.01,
     album: 'Временно',
-    size_mb: 7.42,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgQXV0dW0gYnJlZXplIGJ5IEhhcnZlc3QgU29uZw==",
   },
-  /* {
-    id: 41,
-    title: "Falling Stars",
-    artist: "Cosmic Voyagers",
-    duration: 6.25,
-    album: 'none',
-    size_mb: 5.75,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRmFsbGluZyBTdGFycyBieSBDb3NtYWMgVm95YWdlcnM=",
-  },
-  {
-    id: 42,
-    title: "Nightfall",
-    artist: "The Dark Knights",
-    duration: 7.52,
-    album: 'none',
-    size_mb: 6.92,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgTmlnaHRmYWxsIGJ5IFRoZSBEYXJrIEtuaWdodHM=",
-  },
-  {
-    id: 43,
-    title: "Deep Blue",
-    artist: "Aqua Beat",
-    duration: 6.82,
-    album: 'none',
-    size_mb: 6.26,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgRGVlcCBCbHVlIGJ5IEFxdWEgQmVhdA==",
-  },
-  {
-    id: 44,
-    title: "Melancholy Dream",
-    artist: "Dream State",
-    duration: 5.92,
-    album: 'none',
-    size_mb: 5.48,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgTWVsYW5jaG9seSBkcmVhbSBieSBkcmVhbSBzdGF0ZQ==",
-  },
-  {
-    id: 45,
-    title: "Golden Hour",
-    artist: "Sunset Sounds",
-    duration: 7.35,
-    album: 'none',
-    size_mb: 6.76,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgR29sZGVuIEhvdXIgYnkgU3Vuc2V0IFNvdW5kcw==",
-  },
-  {
-    id: 46,
-    title: "Distant Echoes",
-    artist: "Faraway Rhythm",
-    duration: 6.51,
-    album: 'none',
-    size_mb: 5.99,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRGlzdGFudCBFY2hvZXMgb2YgRmFyd2F5IFJ5dGht",
-  },
-  {
-    id: 47,
-    title: "Winter Solstice",
-    artist: "Chillwave",
-    duration: 8.33,
-    album: 'none',
-    size_mb: 7.65,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgV2ludGVyIFNvbHN0aWNlIGJ5IENoaWxsd2F2ZQ==",
-  },
-  {
-    id: 48,
-    title: "Electric Skies",
-    artist: "Future Electro",
-    duration: 7.88,
-    album: 'none',
-    size_mb: 7.23,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRWxlY3RyaWMgU2tpZXMgYnkgRnV0dXJlIEVsZWN0cm8=",
-  },
-  {
-    id: 49,
-    title: "Lost Time",
-    artist: "Retro Wave",
-    duration: 6.12,
-    album: 'none',
-    size_mb: 5.64,
-    encoded_audio: "QXVkaW8gZGF0YSBmb3IgTG9zdCBUaW1lIGJ5IFJldHJvIFdhdmU=",
-  },
-  {
-    id: 50,
-    title: "Firefly Lights",
-    artist: "Night Dreams",
-    duration: 5.72,
-    album: 'none',
-    size_mb: 5.26,
-    encoded_audio:
-      "QXVkaW8gZGF0YSBmb3IgRmlyZWZseSBMaWdodHMgYnkgTmlnaHQgRHJlYW1z",
-  }, */
 ];
 
 const podcasts = [

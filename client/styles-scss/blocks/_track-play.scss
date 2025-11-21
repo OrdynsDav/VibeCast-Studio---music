@@ -38,8 +38,10 @@
     }
 
     &__description {
-        overflow: hidden;
-        min-width: 0;
+        @media (max-width: 1100px) {
+            overflow: hidden;
+            min-width: 0;
+        }
     }
 
 
@@ -57,13 +59,13 @@
         line-height: 12px;
         margin: 0;
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
             display: block;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
             min-width: 0;
-            width: 100%;
+            width: fit-content;
         }
     }
 
@@ -72,7 +74,7 @@
         line-height: 12px;
         color: $color-dark-gray-1;
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
             display: block;
             text-overflow: ellipsis;
             white-space: nowrap;
