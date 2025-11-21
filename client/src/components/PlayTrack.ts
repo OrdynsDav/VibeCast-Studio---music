@@ -14,6 +14,7 @@ import {
 import { fetchAddFavourite, fetchRemoveFavourite } from "../api/fetches";
 import { formatSeconds, parseApiDuration } from "../utils/helpers";
 import { modalErrorPlayTrack } from "../utils/modals";
+import { PREV_SECONDS, SEEK_STEP, VIEWPORT_WIDTH } from "../utils/constants";
 
 // --- Глобальное состояние плеера ---
 let playerInstance: {
@@ -30,7 +31,7 @@ let interval: number | null = null;
 
 // --- Громкость ---
 let isMuted = false;
-let savedVolume = 1; // По умолчанию — 100%
+let savedVolume = 1; // По умолчанию - 100%
 
 // --- Иконки ---
 const heartIcon = createHeartIcon();
@@ -51,7 +52,7 @@ const progressBar = el("div", { className: "track-play__progress" }, [progressFi
 
 // --- Шкала громкости ---
 const volumeFill = el("div", { className: "track-play__progress-fill" });
-const volumeHandle = el("div", { className: "track-play__volume-handle" }); // Кружок 12x12
+const volumeHandle = el("div", { className: "track-play__volume-handle" });
 const volumeBar = el("div", { className: "track-play__progress track-play__volume-bar" }, [
     volumeFill,
     volumeHandle
@@ -216,44 +217,85 @@ const pauseTrack = () => {
 // --- Переключение треков ---
 const getNextIndex = () => {
     if (!currentTrackProps || !currentTrackProps.trackList) return 0;
+
+    const track = currentTrackProps;
+    const { trackList } = track;
+    const currentIndex = trackList.findIndex(t => t.id === track.id);
+    if (currentIndex === -1) return 0;
+
     if (isShuffle) {
-        return Math.floor(Math.random() * currentTrackProps.trackList.length);
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * trackList.length);
+        } while (randomIndex === currentIndex);
+        return randomIndex;
     } else {
-        return (currentTrackProps.currentIndex + 1) % currentTrackProps.trackList.length;
+        return (currentIndex + 1) % trackList.length;
     }
 };
 
 const getPrevIndex = () => {
     if (!currentTrackProps || !currentTrackProps.trackList) return 0;
+
+    const track = currentTrackProps;
+    const { trackList } = track;
+    const currentIndex = trackList.findIndex(t => t.id === track.id);
+    if (currentIndex === -1) return 0;
+
     if (isShuffle) {
-        return Math.floor(Math.random() * currentTrackProps.trackList.length);
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * trackList.length);
+        } while (randomIndex === currentIndex);
+        return randomIndex;
     } else {
-        return (currentTrackProps.currentIndex - 1 + currentTrackProps.trackList.length) % currentTrackProps.trackList.length;
+        return (currentIndex - 1 + trackList.length) % trackList.length;
     }
 };
 
 const playNextTrack = () => {
     if (!currentTrackProps || !currentTrackProps.trackList) return;
-    const { trackList } = currentTrackProps;
 
-    if (repeatMode === 2 && currentTrackProps.currentIndex === trackList.length - 1) {
-        updateTrack(trackList[0]);
-        return;
+    const track = currentTrackProps;
+    const { trackList } = track;
+    console.log("Треков в списке:", currentTrackProps.trackList.length);
+    const currentIndex = currentTrackProps.trackList.findIndex(t => t.id === track.id);
+    console.log("Текущий индекс:", currentIndex);
+
+    if (repeatMode === 2) {
+        const nextIndex = getNextIndex();
+        updateTrack(trackList[nextIndex]);
+    } else {
+        if (currentIndex < trackList.length - 1) {
+            const nextIndex = getNextIndex();
+            updateTrack(trackList[nextIndex]);
+        } else {
+            pauseTrack();
+        }
     }
-
-    const nextIndex = getNextIndex();
-    updateTrack(trackList[nextIndex]);
 };
 
 const playPrevTrack = () => {
-    if (!currentTrackProps) return;
-    if (playerInstance!.audio.currentTime > 2) {
+    if (!currentTrackProps || !currentTrackProps.trackList) return;
+
+    const track = currentTrackProps;
+    const { trackList } = track;
+    const currentIndex = trackList.findIndex(t => t.id === track.id);
+
+    if (playerInstance!.audio.currentTime > PREV_SECONDS) {
         playerInstance!.audio.currentTime = 0;
         updateProgress();
-    } else {
-        const prevIndex = getPrevIndex();
-        updateTrack(currentTrackProps.trackList![prevIndex]);
+        return;
     }
+
+    if (currentIndex === 0 && repeatMode !== 2) {
+        playerInstance!.audio.currentTime = 0;
+        updateProgress();
+        return;
+    }
+
+    const prevIndex = getPrevIndex();
+    updateTrack(trackList[prevIndex]);
 };
 
 // --- Обновление трека ---
@@ -266,8 +308,18 @@ const updateTrack = (props: TrackPlayProps) => {
     if (interval) clearInterval(interval);
 
     currentTrackProps = { ...props };
-    const totalSeconds = parseApiDuration(props.duration);
 
+    // --- СБРОСИМ состояния ---
+    isShuffle = false;
+    repeatMode = 0;
+
+    // Обновляем UI кнопок
+    shuffleBtn.classList.remove("track-play__btn--active");
+    repeatBtn.classList.remove("track-play__btn--active");
+    setChildren(repeatBtn, [repeatIcon]);
+
+    // --- Остальное ---
+    const totalSeconds = parseApiDuration(props.duration);
     audio.src = props.audioFile;
     audio.volume = isMuted ? 0 : savedVolume;
     audio.load();
@@ -289,7 +341,8 @@ const createPlayer = () => {
     const audio = new Audio();
     audio.volume = savedVolume;
 
-    const player = el("div", { className: "track-play" }, [
+    const trackInfo: (HTMLElement | HTMLElement[])[] = [
+        // Информация о треке
         el("div", { className: "track-play__info" }, [
             trackImg,
             el("div", { className: "track-play__description" }, [
@@ -297,15 +350,38 @@ const createPlayer = () => {
                 trackArtist,
             ]),
         ]),
-        el("div", { className: "track-play__settings" }, [
-            el("div", { className: "track-play__actions" }, [shuffleBtn, skipLeftBtn, playPauseBtn, skipRightBtn, repeatBtn]),
-            el("div", { className: "track-play__progress-bar" }, [timeStartEl, progressBar, timeEndEl]),
-        ]),
-        el("div", { className: "track-play__volume" }, [
-            speakerLowBtn,
-            volumeBar
-        ]),
-    ]);
+    ];
+
+    // Условная вставка по ширине
+    if (VIEWPORT_WIDTH <= 900 && VIEWPORT_WIDTH > 500) {
+        trackInfo.push(
+            el("div", { className: "track-play__settings" }, [
+                el("div", { className: "track-play__actions" }, [skipLeftBtn, playPauseBtn, skipRightBtn]),
+            ]),
+            el("div", { className: "track-play__progress-bar" }, [timeStartEl, progressBar, timeEndEl])
+        );
+    } else if(VIEWPORT_WIDTH <= 500) {
+        trackInfo.push(
+            el("div", { className: "track-play__settings" }, [
+                el("div", { className: "track-play__actions" }, [playPauseBtn]),
+            ]),
+            el("div", { className: "track-play__progress-bar" }, [timeStartEl, progressBar, timeEndEl])
+        );
+    } 
+    else {
+        trackInfo.push(
+            el("div", { className: "track-play__settings" }, [
+                el("div", { className: "track-play__actions" }, [shuffleBtn, skipLeftBtn, playPauseBtn, skipRightBtn, repeatBtn]),
+                el("div", { className: "track-play__progress-bar" }, [timeStartEl, progressBar, timeEndEl]),
+            ]),
+            el("div", { className: "track-play__volume" }, [
+                speakerLowBtn,
+                volumeBar
+            ])
+        );
+    }
+
+    const player = el("div", { className: "track-play" }, trackInfo);
 
     // --- События кнопок ---
     playPauseBtn.onclick = () => {
@@ -376,28 +452,60 @@ const createPlayer = () => {
         this.onerror = null;
     };
 
+    // При конце трека
     audio.addEventListener("ended", () => {
+        if (!currentTrackProps || !currentTrackProps.trackList) return;
+
+        const track = currentTrackProps;
+        const { trackList } = track;
+        const currentIndex = trackList.findIndex(t => t.id === track.id);
+        if (currentIndex === -1) return;
+
         if (repeatMode === 1) {
             audio.currentTime = 0;
             audio.play().catch(err => console.error("Auto-play failed:", err));
             updateProgress();
         } else if (repeatMode === 2) {
             const nextIndex = getNextIndex();
-            updateTrack(currentTrackProps!.trackList![nextIndex]);
+            updateTrack(trackList[nextIndex]);
         } else {
             const nextIndex = getNextIndex();
-            if (currentTrackProps!.currentIndex !== currentTrackProps!.trackList!.length - 1) {
-                updateTrack(currentTrackProps!.trackList![nextIndex]);
+            if (currentIndex < trackList.length - 1) {
+                updateTrack(trackList[nextIndex]);
             } else {
                 pauseTrack();
             }
         }
     });
 
+
+    const handleKeydown = (e: KeyboardEvent) => {
+        if (!playerInstance || !currentTrackProps) return;
+        const { audio } = playerInstance;
+
+        switch (e.key) {
+            case "ArrowLeft":
+                e.preventDefault();
+                audio.currentTime = Math.max(0, audio.currentTime - SEEK_STEP);
+                updateProgress();
+                break;
+
+            case "ArrowRight":
+                e.preventDefault();
+                audio.currentTime = Math.min(audio.duration, audio.currentTime + SEEK_STEP);
+                updateProgress();
+                break;
+        }
+    };
+
+    document.addEventListener("keydown", handleKeydown);
+
+    // --- Возврат экземпляра ---
     return {
         element: player,
         audio,
         destroy: () => {
+            document.removeEventListener("keydown", handleKeydown);
             audio.pause();
             if (interval) clearInterval(interval);
             player.classList.remove("track-play--show");

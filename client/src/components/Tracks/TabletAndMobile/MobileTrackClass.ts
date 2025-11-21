@@ -1,7 +1,6 @@
 import { el } from "redom";
 import { createHeartIcon, createMoreIcon } from "../../SvgElements";
 import { fetchAddFavourite, fetchRemoveFavourite } from "../../../api/fetches";
-import { PlayTrack } from "../../PlayTrack";
 import { TrackPlayProps, TrackProps } from "../../../utils/interfaces";
 import { isFavourite } from "../../../utils/helpers"; // ←
 
@@ -12,7 +11,7 @@ export default class MobileTrack {
         public artist: string,
         public duration: number,
         public album: string
-    ) {}
+    ) { }
 
     getTrack(currentTrackList: TrackProps[]): HTMLElement {
         const svgHeart = createHeartIcon();
@@ -26,45 +25,42 @@ export default class MobileTrack {
             el("button", {
                 className: "tracks__btn",
                 type: "button",
-                onclick: () => {
+                onclick: async () => {
+                    const { PlayTrack } = await import("../../PlayTrack");
+
                     const trackListForPlayer: TrackPlayProps[] = currentTrackList.map(track => ({
                         id: track.id,
                         title: track.title,
                         artist: track.artist,
                         duration: track.duration,
                         album: track.album,
-                        imgPath: `/assets/images/${
-                            track.album !== 'single' && track.album !== 'none'
+                        imgPath: `/assets/images/${track.album !== 'single' && track.album !== 'none'
                                 ? `albums/${track.album}`
                                 : `singles/${track.title}`
-                        }.webp`,
+                            }.webp`,
                         audioFile: `/assets/tracks/${track.title}.mp3`,
                         currentIndex: 0,
                         trackList: [],
-                        isFavourite: isFavourite(track.id) // ← тоже из localStorage
+                        isFavourite: isFavourite(track.id)
                     }));
 
-                    trackListForPlayer.forEach((track, idx) => {
-                        track.currentIndex = idx;
+                    trackListForPlayer.forEach((track) => {
                         track.trackList = trackListForPlayer;
                     });
 
+                    // Находим текущий трек
                     const currentIndexInPage = trackListForPlayer.findIndex(t => t.id === this.id);
 
-                    PlayTrack({
-                        ...trackListForPlayer[currentIndexInPage],
-                        isShuffle: false,
-                        isRepeat: false
-                    });
+                    // Запускаем плеер
+                    PlayTrack(trackListForPlayer[currentIndexInPage]);
                 }
             }, [
                 el("img", {
                     className: "tracks__img",
-                    src: `/assets/images/${
-                        this.album !== 'single' && this.album !== 'none'
+                    src: `/assets/images/${this.album !== 'single' && this.album !== 'none'
                             ? `albums/${this.album}`
                             : `singles/${this.title}`
-                    }.webp`,
+                        }.webp`,
                     alt: "Картинка трека",
                     loading: "lazy",
                     onerror: function (this: HTMLImageElement) {
@@ -108,7 +104,7 @@ export default class MobileTrack {
                 el("button", {
                     className: "tracks__more",
                     type: "button",
-                    onclick: () => {},
+                    onclick: () => { },
                     ariaLabel: "Показать больше"
                 }, [svgMore])
             ])

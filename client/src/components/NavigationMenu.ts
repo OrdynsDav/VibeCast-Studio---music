@@ -1,75 +1,99 @@
-import { el } from "redom"
-import { createMusicNoteIcon } from "./SvgElements"
-import { TracksPage } from "../view/pages/TracksPage"
-import { MAIN_CONTAINER } from "../utils/constants"
+import { el } from "redom";
+import { createAudioCompNavIcon, createMusicNoteIcon } from "./SvgElements";
+import { TracksPage } from "../view/pages/TracksPage";
+import { MAIN_CONTAINER, VIEWPORT_WIDTH } from "../utils/constants";
 
 export const NavigationMenu = (): HTMLElement => {
-    const musicNoteIcon1 = createMusicNoteIcon()
-    const musicNoteIcon2 = createMusicNoteIcon()
+    const musicNoteIcon1 = createMusicNoteIcon();
+    const musicNoteIcon2 = createMusicNoteIcon();
+    const audioCompIcon = createAudioCompNavIcon();
 
-    function changeClassName(event: Event) {
-        const target = event.target as HTMLElement;
+    // --- Удаление ТОЛЬКО контента страницы ---
+    const removePreviousContent = () => {
+        if (!MAIN_CONTAINER) return;
 
-        if (target && target.className === 'nav__link') {
-            const btn = target;
-            const isActive = btn.classList.contains('nav__link--active');
+        const tracksPage = MAIN_CONTAINER.querySelector('.tracks');
+        const favouritesPage = MAIN_CONTAINER.querySelector('.favourites'); // исправил с .is-favourites
 
-            document.querySelectorAll('.nav__link').forEach((link) => {
-                (link as HTMLElement).classList.remove('nav__link--active');
-            });
+        if (tracksPage) tracksPage.remove();
+        if (favouritesPage) favouritesPage.remove();
+    };
 
-            if (!isActive) {
-                btn.classList.add('nav__link--active');
+    // --- Активация кнопки ---
+    const setActiveLink = (button: HTMLElement) => {
+        document.querySelectorAll('.nav__link').forEach(link => {
+            (link as HTMLElement).classList.remove('nav__link--active');
+        });
+        button.classList.add('nav__link--active');
+    };
+
+    // --- Сохраняем ссылку на кнопку "Аудиокомпозиции", чтобы активировать её по умолчанию ---
+    let audioCompButton: HTMLElement | null = null;
+
+    // --- Создание кнопки ---
+    const createNavButton = (
+        text: string,
+        isFavourites: boolean,
+        icon: SVGElement | null = null,
+        makeActive = false  // ← новый параметр: сделать активной сразу
+    ) => {
+        const button = el('button', {
+            className: 'nav__link',
+            type: 'button',
+            onclick: (event: Event) => {
+                const target = event.target as HTMLElement;
+                const btn = target.closest('.nav__link');
+
+                if (!btn || !MAIN_CONTAINER) return;
+
+                removePreviousContent();
+                TracksPage({ isFavourites });
+                setActiveLink(btn as HTMLElement);
             }
+        }, [
+            icon ? icon : null,
+            el('span', {
+                className: 'nav__link-text',
+                textContent: text
+            })
+        ].filter(Boolean)) as HTMLElement;
+
+        // Запоминаем кнопку "Аудиокомпозиции"
+        if (text === 'Аудиокомпозиции') {
+            audioCompButton = button;
         }
+
+        // Если нужно — сразу ставим активный класс
+        if (makeActive) {
+            button.classList.add('nav__link--active');
+        }
+
+        return button;
+    };
+
+    // --- Рендерим меню в зависимости от VIEWPORT_WIDTH ---
+    let menu: HTMLElement;
+
+    if (VIEWPORT_WIDTH <= 900) {
+        menu = el('div', { className: 'nav__menu' }, [
+            createNavButton('Аудиокомпозиции', false, audioCompIcon, true),  // ← активна
+            createNavButton('Избранное', true, null, false)
+        ]);
+    } else {
+        menu = el('nav', { className: 'nav__menu' }, [
+            createNavButton('Избранное', true, musicNoteIcon1, false),
+            createNavButton('Аудиокомпозиции', false, musicNoteIcon2, true) // ← активна
+        ]);
     }
 
-    return (
-        el('nav', {
-            class: 'nav__menu'
-        }, [
-            el('button', {
-                className: ['nav__link'],
-                type: 'button',
-                onclick: (event: Event) => {
-                    if (!MAIN_CONTAINER) {
-                        throw new Error("Контейнер не найден");
-                    }
-                    if (!MAIN_CONTAINER.querySelector('.head-panel')) {
-                        throw new Error('Панель не найдена')
-                    }
-                    MAIN_CONTAINER.querySelector('.head-panel')?.nextElementSibling?.remove()
-                    TracksPage({ isFavourites: true })
-                    changeClassName(event)
-                },
-            }, [
-                musicNoteIcon1,
-                el('span', {
-                    class: 'nav__link-text',
-                    textContent: 'Избранное'
-                })
-            ]),
-            el('button', {
-                className: ['nav__link nav__link--active'],
-                type: 'button',
-                onclick: (event: Event) => {
-                    if (!MAIN_CONTAINER) {
-                        throw new Error("Контейнер не найден");
-                    }
-                    if (!MAIN_CONTAINER.querySelector('.head-panel')) {
-                        throw new Error('Панель не найдена')
-                    }
-                    MAIN_CONTAINER.querySelector('.head-panel')?.nextElementSibling?.remove()
-                    TracksPage({ isFavourites: false })
-                    changeClassName(event)
-                }
-            }, [
-                musicNoteIcon2,
-                el('span', {
-                    class: 'nav__link-text',
-                    textContent: 'Аудиокомпозиции'
-                })
-            ])
-        ])
-    )
-}
+    // --- Инициализация: сразу активируем "Аудиокомпозиции" ---
+    // И запускаем её страницу при первом открытии
+    setTimeout(() => {
+        if (audioCompButton && !document.querySelector('.tracks') && !document.querySelector('.favourites')) {
+            TracksPage({ isFavourites: false });
+            setActiveLink(audioCompButton);
+        }
+    }, 0);
+
+    return menu;
+};

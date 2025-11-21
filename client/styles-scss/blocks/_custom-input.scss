@@ -4,6 +4,10 @@
     position: relative;
     height: 44px;
 
+    @media (max-width: 600px) {
+        height: 40px;
+    }
+
     &--error {
         margin: 0 0 30px;
 
@@ -52,6 +56,10 @@
         line-height: 16px;
         background-color: $color-white;
         color: $color-manatee;
+
+        @media (max-width: 600px) {
+            bottom: 32px;
+        }
     }
 
     &__error {

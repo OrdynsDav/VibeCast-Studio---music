@@ -85,7 +85,7 @@ function createRightArrowIcon() {
     svg.setAttribute('fill', 'none')
 
     svg.innerHTML = `
-        <<path fill-rule="evenodd" clip-rule="evenodd" d="M5.52864 3.52861C5.78899 3.26826 6.2111 3.26826 6.47145 3.52861L10.4714 7.52861C10.7318 7.78896 10.7318 8.21107 10.4714 8.47141L6.47145 12.4714C6.2111 12.7318 5.78899 12.7318 5.52864 12.4714C5.26829 12.2111 5.26829 11.789 5.52864 11.5286L9.05723 8.00001L5.52864 4.47141C5.26829 4.21107 5.26829 3.78896 5.52864 3.52861Z" fill="#FC6D3E"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.52864 3.52861C5.78899 3.26826 6.2111 3.26826 6.47145 3.52861L10.4714 7.52861C10.7318 7.78896 10.7318 8.21107 10.4714 8.47141L6.47145 12.4714C6.2111 12.7318 5.78899 12.7318 5.52864 12.4714C5.26829 12.2111 5.26829 11.789 5.52864 11.5286L9.05723 8.00001L5.52864 4.47141C5.26829 4.21107 5.26829 3.78896 5.52864 3.52861Z" fill="#FC6D3E"/>
     `
 
     return svg;
@@ -105,6 +105,19 @@ function createMusicNoteIcon() {
         <path d="M10 25.5V8L26 4V21.5" stroke="#FC6D3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     `
 
+    return svg;
+}
+
+function createAudioCompNavIcon() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '17');
+    svg.setAttribute('height', '20');
+    svg.setAttribute('viewbox', '0 0 17 20');
+    svg.setAttribute('fill', 'none')
+
+    svg.innerHTML = `
+       <path d="M15.6389 9.35898L2.1411 1.11004C2.02741 1.04056 1.89726 1.00263 1.76404 1.00013C1.63083 0.997637 1.49935 1.03068 1.38314 1.09585C1.26692 1.16103 1.17017 1.25598 1.10283 1.37095C1.0355 1.48592 1 1.61676 1 1.75V18.2479C1 18.3811 1.0355 18.5119 1.10283 18.6269C1.17017 18.7419 1.26692 18.8368 1.38314 18.902C1.49935 18.9672 1.63083 19.0002 1.76404 18.9977C1.89726 18.9952 2.02741 18.9573 2.1411 18.8878L15.6389 10.6389C15.7485 10.5719 15.8391 10.4779 15.902 10.3658C15.9648 10.2537 15.9978 10.1274 15.9978 9.99893C15.9978 9.87046 15.9648 9.74413 15.902 9.63207C15.8391 9.52001 15.7485 9.42598 15.6389 9.35898Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    `
     return svg;
 }
 
@@ -249,8 +262,6 @@ function createRepeatOneIcon() {
     return svg;
 }
 
-
-
 function createSpeakerLowIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('width', '16');
@@ -274,6 +285,7 @@ export {
     createSearchIcon,
     createRightArrowIcon,
     createMusicNoteIcon,
+    createAudioCompNavIcon,
     createUserCheckIcon,
     createCloseIcon,
     createErrorIcon,

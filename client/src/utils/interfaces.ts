@@ -57,7 +57,6 @@ export interface TrackData {
 export interface TrackPlayProps extends TrackData {
   isFavourite: boolean;
   trackList: TrackPlayProps[];
-  currentIndex: number;
   isShuffle?: boolean;
   isRepeat?: boolean;
 }

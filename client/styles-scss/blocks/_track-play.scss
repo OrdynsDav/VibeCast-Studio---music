@@ -8,7 +8,7 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 84px;
+    gap: 16px;
     max-width: 100vw;
     width: 100%;
     background-color: $color-white;
@@ -21,13 +21,27 @@
     &.track-play--show {
         transform: translateY(0);
         transition: transform 0.3s ease;
+
+        @media (max-width: 900px) {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+        }
     }
 
     &__info {
         display: flex;
         align-items: center;
         gap: 10px;
+        max-width: 260px;
+        width: 100%;
     }
+
+    &__description {
+        overflow: hidden;
+        min-width: 0;
+    }
+
 
     &__title-wrap {
         display: flex;
@@ -41,12 +55,31 @@
         letter-spacing: 0.01em;
         font-size: 14px;
         line-height: 12px;
+        margin: 0;
+
+        @media (max-width: 900px) {
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            min-width: 0;
+            width: 100%;
+        }
     }
 
     &__text {
         font-size: 12px;
         line-height: 12px;
         color: $color-dark-gray-1;
+
+        @media (max-width: 900px) {
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            min-width: 0;
+            width: 100%;
+        }
     }
 
     &__settings {
@@ -61,6 +94,10 @@
         align-items: center;
         justify-content: center;
         width: 681px;
+
+        @media (max-width: 900px) {
+            width: unset;
+        }
     }
 
     &__progress-bar {
@@ -71,6 +108,11 @@
         max-width: 610px;
         font-size: 12px;
         color: $color-dark-gray-1;
+
+        @media (max-width: 900px) {
+            max-width: unset;
+            grid-column: span 2;
+        }
     }
 
     &__time {
@@ -126,18 +168,18 @@
             transform: translateY(-50%);
             width: 12px;
             height: 12px;
-            background: $color-cinnabar;
-            border: 1.5px solid $color-cinnabar;
+            background: $color-burnt-orange;
+            border: 1.5px solid $color-burnt-orange;
             border-radius: 50%;
             cursor: pointer;
             z-index: 10;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
             transition: border-color 0.2s;
         }
     }
 
     &__btn {
         height: 16px;
+
         &--like {
             width: 24px;
             height: 24px;
@@ -154,7 +196,7 @@
             }
 
             path {
-                stroke: $color-red-orange;
+                stroke: $color-burnt-orange;
                 color: transparent;
             }
 
@@ -166,7 +208,7 @@
         }
 
         &--play {
-            width: 40px;
+            min-width: 40px;
             height: 40px;
             border-radius: 50%;
             background-color: $color-dark-gray-1;

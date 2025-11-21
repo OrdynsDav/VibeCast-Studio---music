@@ -1,9 +1,8 @@
 import { el } from "redom";
 import { createHeartIcon, createMoreIcon } from "../../SvgElements";
 import { fetchAddFavourite, fetchRemoveFavourite } from "../../../api/fetches";
-import { PlayTrack } from "../../PlayTrack";
 import { TrackPlayProps, TrackProps } from "../../../utils/interfaces";
-import { isFavourite } from "../../../utils/helpers"; 
+import { isFavourite } from "../../../utils/helpers";
 
 export default class DesktopTrack {
     constructor(
@@ -41,8 +40,9 @@ export default class DesktopTrack {
                 el("button", {
                     className: "tracks__btn",
                     type: "button",
-                    onclick: () => {
-                        // Формируем список для плеера
+                    onclick: async () => {
+                        const { PlayTrack } = await import( "../../PlayTrack");
+
                         const trackListForPlayer: TrackPlayProps[] = currentTrackList.map(track => ({
                             id: track.id,
                             title: track.title,
@@ -59,22 +59,15 @@ export default class DesktopTrack {
                             isFavourite: isFavourite(track.id)
                         }));
 
-                        // Назначаем индексы
-                        trackListForPlayer.forEach((track, idx) => {
-                            track.currentIndex = idx;
+                        trackListForPlayer.forEach((track) => {
                             track.trackList = trackListForPlayer;
                         });
 
-                        // Индекс текущего трека
                         const currentIndexInPage = trackListForPlayer.findIndex(t => t.id === this.id);
 
-                        // Запускаем плеер
-                        PlayTrack({
-                            ...trackListForPlayer[currentIndexInPage],
-                            isShuffle: false,
-                            isRepeat: false
-                        });
+                        PlayTrack(trackListForPlayer[currentIndexInPage]);
                     }
+
                 }, [
                     el("img", {
                         className: "tracks__img",

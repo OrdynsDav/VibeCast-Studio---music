@@ -98,7 +98,7 @@ export const login = async (event: Event) => {
 
     } catch (error) {
         if (isErrorLogin(error)) {
-            if (error.message == '{"message":"произошла ошибка при авторизации - неверные данные"}') {
+            if (error.message == '{"message":"произошла ошибка при авторизации - неверные данные"}' && !document.querySelector('.login__error')) {
                 const par = el('p', {
                     className: 'login__error',
                     textContent: 'Произошла ошибка при авторизации - неверные данные'

@@ -88,9 +88,9 @@ function renderMobileTracks(tracks: TrackProps[], container: HTMLElement) {
 
     setChildren(container, []);
     const initialTracks = tracks.slice(0, MOBILE_LOAD_SIZE);
-    const initialElements = initialTracks.map((track, index) => {
+    const initialElements = initialTracks.map((track) => {
         const music = new MobileTrack(track.id, track.title, track.artist, track.duration, track.album);
-        return music.getTrack(initialTracks);
+        return music.getTrack(tracks); // играет те, что в списке из сервера, а не те, что прогрузились
     });
     initialElements.forEach(el => container.appendChild(el));
 
