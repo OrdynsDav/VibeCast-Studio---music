@@ -69,14 +69,13 @@ body {
 }
 body.auth {
   background: linear-gradient(90deg, #EDE7E7 0%, #EDF4FD 68.47%, #E5E9F5 100%);
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 body.auth main {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 90vh;
   padding: 0;
+  margin: auto 0;
 }
 body.play main {
   margin-bottom: 100px;
@@ -171,6 +170,12 @@ ul {
 }
 .header:has(.nav__menu) .header__logo {
   background-color: #FFFFFF;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  padding: 18px 53px;
 }
 @media (max-width: 900px) {
   .header__wrapper {
@@ -178,14 +183,6 @@ ul {
     justify-content: space-between;
     align-items: center;
   }
-}
-.header__logo {
-  position: absolute;
-  width: 100%;
-  z-index: 2;
-  left: 0;
-  top: 0;
-  padding: 18px 53px;
 }
 @media (max-width: 900px) {
   .header__logo {
@@ -581,16 +578,19 @@ ul {
   line-height: 24px;
   color: #AAAAAA;
   position: relative;
+  height: 40px;
+  width: 40px;
 }
 .pagination__btn::before {
   content: "";
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(-7px, -4px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
 .pagination__btn--active {
   font-size: 24px;
@@ -1156,13 +1156,14 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  max-width: 681px;
+  width: 100%;
 }
 .track-play__actions {
   display: flex;
   gap: 20px;
   align-items: center;
   justify-content: center;
-  width: 681px;
 }
 @media (max-width: 900px) {
   .track-play__actions {
@@ -1260,7 +1261,7 @@ ul {
   color: transparent;
 }
 .track-play__btn--like-active path {
-  color: #FF2B2B;
+  color: #FC6D3E;
 }
 .track-play__btn--play {
   min-width: 40px;

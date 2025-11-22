@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-html:has(.modal-error-play-track-body) { 
+html:has(.modal-error-play-track-body) {
     overflow-y: hidden;
 }
 
@@ -31,14 +31,13 @@ body {
 
     &.auth {
         background: linear-gradient(90deg, #EDE7E7 0%, #EDF4FD 68.47%, #E5E9F5 100%);
-        display: block;
+        display: flex;
+        flex-direction: column;
 
         main {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 90vh;
             padding: 0;
+            margin: auto 0;
         }
     }
 

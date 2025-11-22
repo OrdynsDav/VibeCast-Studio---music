@@ -10,15 +10,16 @@ export const TracksPage = ({ isFavourites }: TracksPageProps) => {
     const tracksList = TracksList()
 
     const section = el("section", {
-        className: [isFavourites ? 'tracks is-favourites' : 'tracks'],
-        ariaLabelledby: "tracks-title",
+        className: isFavourites ? 'tracks is-favourites' : 'tracks',
+        "aria-labelledby": isFavourites ? "tracks-title-favourites" : "tracks-title-tracks",
     }, [
         el("h2", {
             class: 'tracks__heading',
-            id: 'tracks-title',
+            id: isFavourites ? "tracks-title-favourites" : "tracks-title-tracks",
             textContent: isFavourites ? 'Избранные треки' : 'Аудифайлы и треки',
         })
-    ])
+    ]);
+
 
     if (!MAIN_CONTAINER || !HEADER_CONTAINER) {
         throw new Error("Контейнер не найден");
