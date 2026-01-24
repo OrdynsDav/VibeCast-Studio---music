@@ -1,6 +1,8 @@
 import { TOKEN } from "../utils/helpers";
 import { LoginProps, ResponseTrackProps } from "../utils/interfaces";
 
+const BASE_URL = "https://vibecast-studio-music.onrender.com/api";
+
 async function validateResponse(response: Response): Promise<Response> {
     if (!response.ok) {
         throw new Error(await response.text());
@@ -11,7 +13,7 @@ async function validateResponse(response: Response): Promise<Response> {
 
 export const fetchTracks = async (): Promise<ResponseTrackProps> => {
     return (
-        await fetch("http://localhost:8000/api/tracks", {
+        await fetch(`${BASE_URL}/tracks`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -24,7 +26,7 @@ export const fetchTracks = async (): Promise<ResponseTrackProps> => {
 
 export const fetchGetFavourites = async (): Promise<ResponseTrackProps> => {
     return (
-        await fetch("http://localhost:8000/api/favorites", {
+        await fetch(`${BASE_URL}/favorites`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -37,7 +39,7 @@ export const fetchGetFavourites = async (): Promise<ResponseTrackProps> => {
 }
 
 export const fetchAddFavourite = async (trackId: number): Promise<void> => {
-    return await fetch("http://localhost:8000/api/favorites", {
+    return await fetch(`${BASE_URL}/favorites`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -51,7 +53,7 @@ export const fetchAddFavourite = async (trackId: number): Promise<void> => {
 }
 
 export const fetchRemoveFavourite = async (trackId: number): Promise<void> => {
-    await fetch("http://localhost:8000/api/favorites", {
+    await fetch(`${BASE_URL}/favorites`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -63,7 +65,7 @@ export const fetchRemoveFavourite = async (trackId: number): Promise<void> => {
 }
 
 export const fetchRegister = (username: string, password: string): Promise<void> => {
-    return fetch("http://localhost:8000/api/register", {
+    return fetch(`${BASE_URL}/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -78,7 +80,7 @@ export const fetchRegister = (username: string, password: string): Promise<void>
 }
 
 export const fetchLogin = (username: string, password: string): Promise<LoginProps> => {
-    return fetch("http://localhost:8000/api/login", {
+    return fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
