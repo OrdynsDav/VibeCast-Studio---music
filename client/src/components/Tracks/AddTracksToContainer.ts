@@ -1,6 +1,6 @@
 import { el, setChildren } from "redom";
 import { fetchGetFavourites, fetchTracks } from "../../api/fetches";
-import { buildPaginationButtons, renderDesktopTracksPage } from "../PaginationAndRender";
+import { buildPaginationButtons, renderDesktopTracksPage } from "../paginationAndRender";
 import { TrackProps, TracksPageProps } from "../../utils/interfaces";
 import { VIEWPORT_WIDTH, ITEM_IN_PAGE, MOBILE_LOAD_SIZE } from "../../utils/constants";
 import { setCache, getStorageItem } from "../../utils/helpers";
